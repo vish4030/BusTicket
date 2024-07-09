@@ -1,12 +1,12 @@
 import express from 'express';
 import cors from 'cors';
 
-import dataRouter from "./routes/data.js";
-import restaurantRouter from "./routes/restaurant.js"
+import busRouter from "./routes/bus.js";
 
 export const app = express();
 
 app.use(cors());
-app.use(dataRouter);
-app.use(restaurantRouter);
+app.use(express.json())
+app.use(busRouter);
+
 
