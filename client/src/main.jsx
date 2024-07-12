@@ -8,6 +8,8 @@ import './index.css'
 import SignUp from './pages/SignUp.jsx'
 import Login from './pages/Login.jsx'
 import ErrorBoundary from './pages/ErrorBoundary.jsx'
+import BusView from './pages/BusView.jsx'
+import Passenger from './pages/Passenger.jsx'
 
 
 
@@ -26,6 +28,16 @@ const routes = createBrowserRouter([
   {
     path:"/login",
     element:<Login />,
+    errorElement:<ErrorBoundary />
+  },
+  {
+    path:"/busInfo",
+    element:<BusView />,
+    errorElement:<ErrorBoundary />
+  },
+  {
+    path:"/passenger",
+    element:<Passenger />,
     errorElement:<ErrorBoundary />
   },
 ])

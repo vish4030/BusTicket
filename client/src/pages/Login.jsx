@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 import Navbar from '../components/Navbar';
 import endPoints from '../constant';
 
 const Login = () => {
     const [data, setData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
 
+    const redirectToHome = () => {
+        navigate('/');
+      };
 
-    function loginSession(userEmail, username) {
-        localStorage.setItem('userId', userEmail);
-        localStorage.setItem('username', username);
+    function loginSession(userInfo) {
+        localStorage.setItem('userInfo',JSON.stringify(userInfo));
+
     }
 
     const userLogin = async () => {
         try {
             const response = await axios.post(endPoints.baseUrl + endPoints.login, data);
-            loginSession(response.data.email, response.data.name);
+            loginSession(response.data);
+            if(response.data.name != null)
+                redirectToHome();
             console.log(response.data);
         } catch (error) {
             console.error('Login error:', error.message); // Handle login error
@@ -56,7 +64,7 @@ const Login = () => {
                                 <input className='border border-gray-600 rounded-lg w-full p-2' type="password" id='password' name='password' value={data.password} onChange={handleChange} autoComplete='off' />
                          </div>
                          <div>
-                               <button className='border border-red-600 rounded-lg px-8 py-2' onClick={handleSubmit}>SignUp</button>
+                               <button className='border border-red-600 rounded-lg px-8 py-2' onClick={handleSubmit}>Login</button>
                          </div>
                          </form>
                      </div>

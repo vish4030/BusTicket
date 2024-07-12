@@ -1,21 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+
+
 import gradientBackground from '../assets/gradient_bg.jpg';
 import busImg from '../assets/Designer.png';
 
 const Home = () => {
   const [input, setInput] = useState({ start: "", destination: "" });
-  
+  const navigate = useNavigate();
+
+  const redirectToDetails = (busData) => {
+    navigate('/busInfo', { state: { busData } });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.get("http://localhost:5000/findBus", { params: input })
-      .then((response) => console.log(response))
+      .then((response) => {
+        if(response.data.length>0)
+          redirectToDetails(response.data);
+      })
       .catch((err) => console.log(err));
   }
 
   const handleChange = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   }
+
+  
+  
 
   return (
     <div className="relative bg-cover bg-center h-[90vh] flex flex-row" style={{ backgroundImage: `url(${gradientBackground})` }}>
